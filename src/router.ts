@@ -2,11 +2,9 @@ import Router, { RouterContext as Context } from 'koa-router';
 
 import {
   HomeController,
-  BookController,
 } from './controllers';
 import {
   HomeService,
-  BookService,
 } from './services';
 
 export interface Route {
@@ -17,23 +15,12 @@ export interface Route {
 
 export const createRouter = (router: Router): Router => {
   const homeController = new HomeController(new HomeService());
-  const bookController = new BookController(new BookService({}));
 
   const routes: Route[] = [
     {
       path: '/',
       method: 'get',
       handler: homeController.get,
-    },
-    {
-      path: '/books/:id',
-      method: 'get',
-      handler: bookController.get,
-    },
-    {
-      path: '/books',
-      method: 'post',
-      handler: bookController.create,
     },
   ];
 
