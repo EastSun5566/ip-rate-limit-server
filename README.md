@@ -1,8 +1,9 @@
-# TypeScript koa starter
+# IP rate limit server
 
-[![License](https://img.shields.io/github/license/EastSun5566/typescript-koa-starter.svg?style=for-the-badge)](https://github.com/EastSun5566/typescript-koa-starter/blob/main/LICENSE)
+## Requirement
 
-> ✨ A starter for my TypeScript Koa project
+- 每個 IP 每分鐘僅能接受 60 個 requests
+- 在首頁顯示目前的 request 量，超過限制的話則顯示 Error，例如在一分鐘內第 30 個 request 則顯示 30，第 61 個 request 則顯示 Error
 
 ## Getting started
 
