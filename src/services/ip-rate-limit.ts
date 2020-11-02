@@ -9,10 +9,10 @@ export class IPRateLimitService {
     count: number;
     ttl: number;
   }> {
-    const { ipRateLimit } = config;
+    const { max } = config.ipRateLimit;
     const { count, ttl } = await this.models.IP.increaseCount({ ip });
 
-    if (count > ipRateLimit.max) throw new Error('exceed the limit');
+    if (count > max) throw new Error('exceed the limit');
 
     return {
       count,

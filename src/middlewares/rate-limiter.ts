@@ -1,6 +1,6 @@
 import { IMiddleware } from 'koa-router';
 
-import { getRedisClient } from '../db/redis';
+import { getRedisClient } from '../db';
 import { IPModel } from '../models';
 import { IPRateLimitService } from '../services';
 import { config } from '../../config';

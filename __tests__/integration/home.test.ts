@@ -1,18 +1,19 @@
 import { Server } from 'http';
-import supertest from 'supertest';
+import { promisify } from 'util';
+import { Redis } from 'ioredis';
+import supertest, { SuperTest, Test } from 'supertest';
 
 import { config } from '../../config';
 import { createApp } from '../../src/app';
-import { getRedisClient } from '../../src/db/redis';
-
-type Request = supertest.SuperTest<supertest.Test>;
+import { getRedisClient } from '../../src/db';
+import { IPModel } from '../../src/models';
 
 const sendConcurrencyRequests = ({
   request,
   concurrency,
   ip,
 }: {
-  request: Request;
+  request: SuperTest<Test>;
   concurrency: number;
   ip: string;
 }) => Promise.all(
@@ -24,21 +25,50 @@ const sendConcurrencyRequests = ({
   ),
 );
 
+const createIPCount = async ({
+  store,
+  ip,
+  count,
+  expiredSec,
+}: {
+  store: Redis;
+  ip: string;
+  count: number
+  expiredSec: number;
+}) => {
+  const ipModel = new IPModel(store);
+
+  return Promise.all(
+    Array.from(
+      { length: count },
+      () => ipModel.increaseCount({ ip, expiredSec }),
+    ),
+  );
+};
+
+const sleep = (ms: number) => promisify(setTimeout)(ms);
+
 describe('GET /', () => {
   const IP = '192.168.0.0';
   const { max, windowSec } = config.ipRateLimit;
 
   let app: Server;
-  let request: Request;
+  let request: SuperTest<Test>;
+  let store: Redis;
 
-  beforeEach(() => {
+  beforeAll(() => {
     app = createApp();
     request = supertest(app);
+    store = getRedisClient();
   });
 
   afterEach(async () => {
+    await store.flushdb();
+  });
+
+  afterAll(() => {
     app.close();
-    await getRedisClient().flushdb();
+    store.disconnect();
   });
 
   it(`should return 200 with count when # of requests is less than ${max} in ${windowSec}s`, async () => {
@@ -61,6 +91,22 @@ describe('GET /', () => {
     expect(res[count - 1].body).toHaveProperty('message', 'too many requests');
   });
 
-  // it(`should return 200 with count when already send max # of requests after ${windowSec + 1}s`, async () => {
-  // });
+  it(`should return 200 with count 1 when already send ${max} of requests after ${windowSec + 1}s`, async () => {
+    const expiredSec = 1;
+
+    await createIPCount({
+      store,
+      ip: IP,
+      count: max,
+      expiredSec,
+    });
+
+    await sleep((expiredSec + 1) * 1000);
+
+    const [res] = await sendConcurrencyRequests({ request, concurrency: 1, ip: IP });
+
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty('ip', IP);
+    expect(res.body).toHaveProperty('count', 1);
+  });
 });
