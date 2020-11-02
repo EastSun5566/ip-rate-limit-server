@@ -9,7 +9,7 @@ export class IPModel {
 
   async increaseCount({ ip }: { ip: string }): Promise<{
     count: number;
-    resetTime: number;
+    ttl: number;
   }> {
     const { ipRateLimit: { windowSec } } = config;
     const key = KEY_PREFIX + ip;
@@ -23,7 +23,7 @@ export class IPModel {
 
     return {
       count,
-      resetTime: ttl,
+      ttl,
     };
   }
 }
