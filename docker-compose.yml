@@ -2,6 +2,7 @@ version: "3"
 
 services:
   app:
+    container_name: ip-rate-limit-server
     build: .
     volumes:
       - ./src:/app/src
@@ -9,3 +10,12 @@ services:
     ports:
       - 8080:8080
     command: npm start
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+  redis:
+    image: redis:6
+    ports:
+      - 6379:6379

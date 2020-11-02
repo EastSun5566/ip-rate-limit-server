@@ -5,24 +5,21 @@ import Router from 'koa-router';
 import logger from 'koa-logger';
 
 import { createRouter } from './router';
-import { handleErrors } from './middlewares';
+import { errorHandler, rateLimiter } from './middlewares';
 
-interface AppOptions {
-  routesPrefix?: string
-}
-
-export const createApp = ({ routesPrefix = '' }: AppOptions = {}): Server => {
-  const router = createRouter(new Router({ prefix: routesPrefix }));
+export const createApp = (): Server => {
+  const router = createRouter(new Router());
 
   const port = process.env.PORT || 8080;
 
   const app = new Koa()
     .use(logger())
+    .use(errorHandler)
+    .use(rateLimiter)
     .use(router.routes())
     .use(router.allowedMethods())
-    .use(handleErrors)
     .listen(port, () => {
-      console.info(`[HTTP] listening on http://localhost:${port}${routesPrefix}`);
+      console.info(`[HTTP] listening on http://localhost:${port}`);
     });
 
   return app;

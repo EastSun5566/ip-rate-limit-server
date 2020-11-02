@@ -5,9 +5,10 @@ let redisClient: Redis.Redis;
 export const getRedisClient = (): Redis.Redis => {
   if (redisClient) return redisClient;
 
+  const { REDIS_HOST, REDIS_PORT } = process.env;
   redisClient = new Redis({
-    host: process.env.REDIS_HOST || '127.0.0.1',
-    port: +process.env.REDIS_PORT || 6379,
+    host: REDIS_HOST || '127.0.0.1',
+    port: (REDIS_PORT && +REDIS_PORT) || 6379,
   });
 
   return redisClient;
