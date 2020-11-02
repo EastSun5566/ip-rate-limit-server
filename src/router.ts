@@ -1,11 +1,6 @@
 import Router, { RouterContext as Context } from 'koa-router';
 
-import {
-  HomeController,
-} from './controllers';
-import {
-  HomeService,
-} from './services';
+import { HomeController } from './controllers';
 
 export interface Route {
   path: string;
@@ -14,7 +9,7 @@ export interface Route {
 }
 
 export const createRouter = (router: Router): Router => {
-  const homeController = new HomeController(new HomeService());
+  const homeController = new HomeController();
 
   const routes: Route[] = [
     {

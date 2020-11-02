@@ -1,1 +1,1 @@
-export * from './home';
+export * from './ip-rate-limit';

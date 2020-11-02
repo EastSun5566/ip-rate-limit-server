@@ -11,7 +11,7 @@ interface AppOptions {
   routesPrefix?: string
 }
 
-export const createApp = ({ routesPrefix = '/' }: AppOptions = {}): Server => {
+export const createApp = ({ routesPrefix = '' }: AppOptions = {}): Server => {
   const router = createRouter(new Router({ prefix: routesPrefix }));
 
   const port = process.env.PORT || 8080;
