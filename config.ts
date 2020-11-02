@@ -1,6 +1,6 @@
 export const config = {
   ipRateLimit: {
-    max: 5,
+    max: 60,
     windowSec: 60,
   },
 };

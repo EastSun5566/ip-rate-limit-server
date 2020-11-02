@@ -1,5 +1,5 @@
 import { IPModel } from '../models';
-import { config } from '../config';
+import { config } from '../../config';
 
 export class IPRateLimitService {
   // eslint-disable-next-line no-useless-constructor

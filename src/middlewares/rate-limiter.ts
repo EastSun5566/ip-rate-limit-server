@@ -3,7 +3,7 @@ import { IMiddleware } from 'koa-router';
 import { getRedisClient } from '../db/redis';
 import { IPModel } from '../models';
 import { IPRateLimitService } from '../services';
-import { config } from '../config';
+import { config } from '../../config';
 
 export const rateLimiter: IMiddleware = async (ctx, next) => {
   const store = getRedisClient();
@@ -23,7 +23,7 @@ export const rateLimiter: IMiddleware = async (ctx, next) => {
     ctx.state.clientInfo = { ip, count, ttl };
   } catch (err) {
     if (err.message === 'exceed the limit') {
-      ctx.throw(429, 'Too many requests');
+      ctx.throw(429, 'too many requests');
       return;
     }
 
