@@ -3,7 +3,7 @@ import { promisify } from 'util';
 import { Redis } from 'ioredis';
 import supertest, { SuperTest, Test } from 'supertest';
 
-import { config } from '../../config';
+import { config } from '../../src/config';
 import { createApp } from '../../src/app';
 import { getRedisClient } from '../../src/db';
 import { IPModel } from '../../src/models';
@@ -49,7 +49,7 @@ const createIPCount = async ({
 const sleep = (ms: number) => promisify(setTimeout)(ms);
 
 describe('GET /', () => {
-  const IP = '192.168.0.0';
+  const IP = '192.168.0.1';
   const { max, windowSec } = config.ipRateLimit;
 
   let app: Server;

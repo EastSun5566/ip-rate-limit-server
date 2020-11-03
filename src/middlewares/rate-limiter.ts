@@ -3,7 +3,7 @@ import { IMiddleware } from 'koa-router';
 import { getRedisClient } from '../db';
 import { IPModel } from '../models';
 import { IPRateLimitService } from '../services';
-import { config } from '../../config';
+import { config } from '../config';
 
 export const rateLimiter: IMiddleware = async (ctx, next) => {
   const store = getRedisClient();
