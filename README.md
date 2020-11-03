@@ -36,6 +36,37 @@ npm i
 npm run test:docker
 ```
 
+## Test cases
+
+- Given: 初次請求
+
+  ```sh
+  curl -i http://localhost:8080
+
+  HTTP/1.1 200 OK
+  X-rateLimit-Limit: 60
+  X-Rate-Limit-Remaining: 59
+  X-RateLimit-Reset: 1604393498011
+
+  {
+    "ip": "192.168.0.0",
+    "count": 1,
+    "ttl": 60
+  }
+  ```
+
+- Given: 一分鐘請求數已達上限
+
+  ```sh
+  curl -i http://localhost:8080
+
+  HTTP/1.1 429 Too Many Requests
+
+  {
+    "message": "too many requests"
+  }
+  ```
+
 ## Project structure
 
 | folder                      | description                                            |
