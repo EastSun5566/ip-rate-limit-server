@@ -1,7 +1,7 @@
 {
-  "name": "typescript-koa-starter",
-  "version": "0.0.0",
-  "description": "Typescript Koa Starter",
+  "name": "ip-rate-limit-server",
+  "version": "1.0.0",
+  "description": "IP rate limit server with Redis",
   "scripts": {
     "start:dev": "nodemon -e ts --exec ts-node src",
     "start": "node dist",
@@ -16,15 +16,16 @@
   "keywords": [
     "Typescript",
     "Koa",
-    "starter"
+    "rate-limit",
+    "Redis"
   ],
   "author": "汪東陽 EastSun5566",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/EastSun5566/typescript-koa-starter"
+    "url": "https://github.com/EastSun5566/ip-rate-limit-server"
   },
-  "homepage": "https://github.com/EastSun5566/typescript-koa-starter",
+  "homepage": "https://github.com/EastSun5566/ip-rate-limit-server",
   "dependencies": {
     "ioredis": "^4.19.2",
     "koa": "^2.13.0",

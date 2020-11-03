@@ -1,5 +1,7 @@
 # IP rate limit server
 
+This project is base on my [typescript-koa-starter](https://github.com/EastSun5566/typescript-koa-starter)
+
 > 依據 IP 限流 server
 
 ## Required features
