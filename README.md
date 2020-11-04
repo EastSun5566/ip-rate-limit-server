@@ -104,7 +104,7 @@ npm run test:docker
 1. 此資料用途不用到非常精準，流失也無所謂
 1. 避免主 DB 增加工作量
 
-關於 Redis 上的設計，用 IP 加上簡單前綴避免命名空間衝突做為 key，value 即為請求數，使用 `INCR` 操作作去增加計數，即可做到避免用 get/set 會產生的 Read–write conflict，但這邊會有個問題，在新 IP 被初次計數時是需要設置過期秒數，所以這邊使用 SET 操作額外提供的 option `NX` 做條件判斷在包進 Transactions 中解決，示意如下：
+關於 Redis 上的設計，用 IP 加上簡單前綴避免命名空間衝突做為 key，value 即為請求數，使用 `INCR` 操作作去增加計數，即可做到避免用 get/set 會產生的 Read–write conflict，但這邊會有個問題，在新 IP 被初次計數時是需要設置過期秒數，所以這邊使用 SET 操作額外提供的 option `NX` 做條件判斷再包進 Transactions 中解決，示意如下：
 
 ```ts
 const key = `ip:${ip}`;
