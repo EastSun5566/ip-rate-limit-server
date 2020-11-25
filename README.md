@@ -2,8 +2,6 @@
 
 This project is base on my [typescript-koa-starter](https://github.com/EastSun5566/typescript-koa-starter)
 
-> 依據 IP 限流 server
-
 ## Required features
 
 - 每個 IP 每分鐘僅能接受 60 個 requests

@@ -6,7 +6,7 @@ import Router from 'koa-router';
 import { createRouter } from './router';
 import { errorHandler, rateLimiter } from './middlewares';
 
-export const createApp = (): Server => {
+export const createServer = (): Server => {
   const router = createRouter(new Router());
 
   const port = process.env.PORT || 8080;
@@ -24,4 +24,4 @@ export const createApp = (): Server => {
 
   return server;
 };
-export default createApp;
+export default createServer;

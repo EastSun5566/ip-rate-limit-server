@@ -1,5 +1,6 @@
 import { IPModel } from '../models';
 import { config } from '../config';
+import { OverIpLimitError } from '../utils/errors';
 
 export class IPRateLimitService {
   // eslint-disable-next-line no-useless-constructor
@@ -12,12 +13,9 @@ export class IPRateLimitService {
     const { max } = config.ipRateLimit;
     const { count, ttl } = await this.models.IP.increaseCount({ ip });
 
-    if (count > max) throw new Error('exceed the limit');
+    if (count > max) throw new OverIpLimitError({ ttl });
 
-    return {
-      count,
-      ttl,
-    };
+    return { count, ttl };
   }
 }
 

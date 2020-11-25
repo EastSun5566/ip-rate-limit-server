@@ -26,10 +26,7 @@ export class IPModel {
       .ttl(key)
       .exec();
 
-    return {
-      count,
-      ttl,
-    };
+    return { count, ttl };
   }
 }
 

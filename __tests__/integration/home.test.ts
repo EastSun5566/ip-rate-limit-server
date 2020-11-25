@@ -4,7 +4,7 @@ import { Redis } from 'ioredis';
 import supertest, { SuperTest, Test } from 'supertest';
 
 import { config } from '../../src/config';
-import { createApp } from '../../src/app';
+import { createServer } from '../../src/server';
 import { getRedisClient } from '../../src/db';
 import { IPModel } from '../../src/models';
 
@@ -57,7 +57,7 @@ describe('GET /', () => {
   let store: Redis;
 
   beforeAll(() => {
-    app = createApp();
+    app = createServer();
     request = supertest(app);
     store = getRedisClient();
   });
