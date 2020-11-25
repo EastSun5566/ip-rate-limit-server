@@ -1,15 +1,12 @@
 import { IMiddleware } from 'koa-router';
 
-import { getRedisClient } from '../db';
-import { IPModel } from '../models';
 import { IPRateLimitService } from '../services';
 import { config } from '../config';
 import { OverIpLimitError } from '../utils/errors';
 
-export const rateLimiter: IMiddleware = async (ctx, next) => {
-  const store = getRedisClient();
-  const ipRateLimitService = new IPRateLimitService({ IP: new IPModel(store) });
-
+export const rateLimiter = (
+  ipRateLimitService: IPRateLimitService,
+): IMiddleware => async (ctx, next) => {
   const { ip } = ctx;
   try {
     const { count, ttl } = await ipRateLimitService.checkIPCount({ ip });

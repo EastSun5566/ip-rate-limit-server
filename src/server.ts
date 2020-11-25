@@ -6,18 +6,21 @@ import Router from 'koa-router';
 import { createRouter } from './router';
 import { errorHandler, rateLimiter } from './middlewares';
 
+import { getRedisClient } from './db';
+import { IPModel } from './models';
+import { IPRateLimitService } from './services';
+
 export const createServer = (): Server => {
   const router = createRouter(new Router());
 
-  const port = process.env.PORT || 8080;
-
   const app = new Koa()
-    .use(errorHandler)
-    .use(rateLimiter)
+    .use(errorHandler())
+    .use(rateLimiter(new IPRateLimitService({ ip: new IPModel(getRedisClient()) })))
     .use(router.routes())
     .use(router.allowedMethods());
 
   app.proxy = true;
+  const port = process.env.PORT || 8080;
   const server = app.listen(port);
 
   console.info(`[HTTP] listening on http://localhost:${port}`);
