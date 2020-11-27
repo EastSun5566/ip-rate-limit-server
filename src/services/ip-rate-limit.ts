@@ -1,23 +1,21 @@
 import { IPModel } from '../models';
 import { config } from '../config';
+import { OverIpLimitError } from '../utils/errors';
 
 export class IPRateLimitService {
   // eslint-disable-next-line no-useless-constructor
-  constructor(public models: { IP: IPModel }) {}
+  constructor(public models: { ip: IPModel }) {}
 
   async checkIPCount({ ip }: { ip: string }): Promise<{
     count: number;
     ttl: number;
   }> {
     const { max } = config.ipRateLimit;
-    const { count, ttl } = await this.models.IP.increaseCount({ ip });
+    const { count, ttl } = await this.models.ip.increaseCount({ ip });
 
-    if (count > max) throw new Error('exceed the limit');
+    if (count > max) throw new OverIpLimitError({ ttl });
 
-    return {
-      count,
-      ttl,
-    };
+    return { count, ttl };
   }
 }
 
