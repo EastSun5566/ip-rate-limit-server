@@ -28,7 +28,7 @@ export const rateLimiter = (
     throw err;
   }
 
-  next();
+  await next();
 };
 
 export default rateLimiter;

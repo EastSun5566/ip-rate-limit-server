@@ -1,9 +1,9 @@
 import { Redis } from 'ioredis';
 import { config } from '../config';
 
-const KEY_PREFIX = 'ip:';
-
 export class IPModel {
+  static PREFIX_KEY = 'ip:'
+
   // eslint-disable-next-line no-useless-constructor
   constructor(public store: Redis) {}
 
@@ -17,7 +17,7 @@ export class IPModel {
     count: number;
     ttl: number;
   }> {
-    const key = KEY_PREFIX + ip;
+    const key = IPModel.PREFIX_KEY + ip;
 
     const [, [, count], [, ttl]] = await this.store
       .multi()
