@@ -14,13 +14,20 @@ This project is base on my [typescript-koa-starter](https://github.com/EastSun55
 - Docker
 - Jest
 
+## Table of Contents
+
+- [IP rate limit server](#ip-rate-limit-server)
+  - [Required features](#required-features)
+  - [Using stack](#using-stack)
+  - [Table of Contents](#table-of-contents)
+  - [Getting started](#getting-started)
+    - [Starting server with docker](#starting-server-with-docker)
+    - [Starting test with docker](#starting-test-with-docker)
+  - [Test cases](#test-cases)
+  - [Folder structure](#folder-structure)
+  - [Why & How](#why--how)
+
 ## Getting started
-
-### Installation
-
-```sh
-npm i
-```
 
 ### Starting server with docker
 
@@ -39,10 +46,8 @@ npm run test:docker
 - Given: 初次請求
 
   ```sh
-  # when request
   curl -i http://localhost:8080
 
-  # then response 200 with count info
   HTTP/1.1 200 OK
   X-rateLimit-Limit: 60
   X-Rate-Limit-Remaining: 59
@@ -58,10 +63,8 @@ npm run test:docker
 - Given: 在一分鐘內請求數已達上限
 
   ```sh
-  # when request
   curl -i http://localhost:8080
 
-  # then response 429 with error message
   HTTP/1.1 429 Too Many Requests
 
   {
@@ -73,7 +76,7 @@ npm run test:docker
 
   則結果同 case 1
 
-## Project structure
+## Folder structure
 
 | folder                      | description                                         |
 | --------------------------- | --------------------------------------------------- |
@@ -90,7 +93,7 @@ npm run test:docker
 1. 需要記住每個 IP 當前的請求數，並在請求進來後加一
 1. 需要在給定時間內重置計數
 
-最簡單直覺的方式是使用 local memory 記住狀態，以 JS Object key 為 IP、 value 為請求數，並用給定時間做 setInterval 去 delete key 重置，當然這有很多缺點：
+最簡單直覺的方式是使用 local memory 記住狀態，以 Map key 為 IP、 value 為請求數，並用給定時間做 setInterval 去 delete key 重置，當然這有很多缺點：
 
 1. QPS 很高時 local memory 會被塞爆
 1. setInterval 通常會延遲，也就是說相同 IP 會超訪
