@@ -14,18 +14,18 @@ This project is base on my [typescript-koa-starter](https://github.com/EastSun55
 - Docker
 - Jest
 
-## Table of Contents
+## Table of contents
 
 - [IP rate limit server](#ip-rate-limit-server)
   - [Required features](#required-features)
   - [Using stack](#using-stack)
-  - [Table of Contents](#table-of-contents)
+  - [Table of contents](#table-of-contents)
   - [Getting started](#getting-started)
     - [Starting server with docker](#starting-server-with-docker)
     - [Starting test with docker](#starting-test-with-docker)
   - [Test cases](#test-cases)
   - [Folder structure](#folder-structure)
-  - [Why & How](#why--how)
+  - [The Why & How](#the-why--how)
 
 ## Getting started
 
@@ -78,15 +78,33 @@ npm run test:docker
 
 ## Folder structure
 
-| folder                      | description                                         |
-| --------------------------- | --------------------------------------------------- |
-| src/index                   | 進入點                                              |
-| src/app                     | 初始化 server 並 apply 限流 middleware              |
-| src/middleware/rate-limiter | 限流 middleware，當超出限制時拋出 429 錯誤給 client |
-| src/services/ip-rate-limit  | IP 的限流服務，檢查當前此 IP 的請求數量，超出即拋錯 |
-| src/models/ip               | IP 計數 data store，連接 redis                      |
+```sh
+src
+├── config.ts
+├── controllers
+│   ├── home.ts
+│   └── index.ts
+├── db
+│   ├── index.ts
+│   └── redis.ts
+├── index.ts # 進入點
+├── middlewares
+│   ├── error-handler.ts
+│   ├── index.ts
+│   └── rate-limiter.ts # 限流 middleware，當超出限制時拋出 429 錯誤給 client
+├── models
+│   ├── index.ts
+│   └── ip.ts # IP 計數 model，連接 redis
+├── router.ts
+├── server.ts # 初始化 server 並 apply 限流 middleware
+├── services
+│   ├── index.ts
+│   └── ip-rate-limit.ts # IP 的限流服務，檢查當前此 IP 的請求數量，超出即拋錯
+└── utils
+    └── errors.ts
+```
 
-## Why & How
+## The Why & How
 
 使用 IP 做唯一辨識去限制單位時間內的請求數，此問題可先分成兩個子問題：
 
