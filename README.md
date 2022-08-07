@@ -21,6 +21,7 @@ This project is base on my [typescript-koa-starter](https://github.com/EastSun55
   - [Using stack](#using-stack)
   - [Table of contents](#table-of-contents)
   - [Getting started](#getting-started)
+    - [Starting dev server with docker](#starting-dev-server-with-docker)
     - [Starting server with docker](#starting-server-with-docker)
     - [Starting test with docker](#starting-test-with-docker)
   - [Test cases](#test-cases)
@@ -29,16 +30,22 @@ This project is base on my [typescript-koa-starter](https://github.com/EastSun55
 
 ## Getting started
 
+### Starting dev server with docker
+
+```sh
+docker-compose run --service-ports server npm run start:dev
+```
+
 ### Starting server with docker
 
 ```sh
-npm run start:docker
+docker-compose up
 ```
 
 ### Starting test with docker
 
 ```sh
-npm run test:docker
+docker-compose run server npm test
 ```
 
 ## Test cases
