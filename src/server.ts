@@ -6,7 +6,7 @@ import Router from 'koa-router';
 import { createRouter } from './router';
 import { errorHandler, rateLimiter } from './middlewares';
 
-import { getRedisClient } from './db';
+import { getRedisClient } from './redis';
 import { IPModel } from './models';
 import { IPRateLimitService } from './services';
 

@@ -1,8 +1,8 @@
-import Redis from 'ioredis';
+import Redis, { Redis as RedisClient } from 'ioredis';
 
-let redisClient: Redis.Redis;
+let redisClient: RedisClient;
 
-export const getRedisClient = (): Redis.Redis => {
+export const getRedisClient = (): RedisClient => {
   if (redisClient) return redisClient;
 
   const { REDIS_HOST, REDIS_PORT } = process.env;
