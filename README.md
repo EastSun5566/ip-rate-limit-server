@@ -1,6 +1,6 @@
 # IP rate limit server
 
-This project is base on my [typescript-koa-starter](https://github.com/EastSun5566/typescript-koa-starter)
+This project is based on my [typescript-koa-starter](https://github.com/EastSun5566/typescript-koa-starter)
 
 ## Required features
 
@@ -26,7 +26,7 @@ This project is base on my [typescript-koa-starter](https://github.com/EastSun55
     - [Starting test with docker](#starting-test-with-docker)
   - [Test cases](#test-cases)
   - [Folder structure](#folder-structure)
-  - [The Why & How](#the-why--how)
+  - [The Why \& How](#the-why--how)
 
 ## Getting started
 
