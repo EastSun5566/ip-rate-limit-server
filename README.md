@@ -52,36 +52,38 @@ docker-compose run server npm test
 
 - Given: 初次請求
 
-  ```sh
-  curl -i http://localhost:8080
+```sh
+curl -i http://localhost:8080
 
-  HTTP/1.1 200 OK
-  X-rateLimit-Limit: 60
-  X-Rate-Limit-Remaining: 59
-  X-RateLimit-Reset: 1604393498011
+HTTP/1.1 200 OK
+X-rateLimit-Limit: 60
+X-Rate-Limit-Remaining: 59
+X-RateLimit-Reset: 1604393498011
 
-  {
-    "ip": "192.168.0.1",
-    "count": 1,
-    "ttl": 60
-  }
-  ```
+{
+  "ip": "192.168.0.1",
+  "count": 1,
+  "ttl": 60
+}
+```
 
 - Given: 在一分鐘內請求數已達上限
 
-  ```sh
-  curl -i http://localhost:8080
+```sh
+curl -i http://localhost:8080
 
-  HTTP/1.1 429 Too Many Requests
+HTTP/1.1 429 Too Many Requests
 
-  {
-    "message": "too many requests"
-  }
-  ```
+{
+  "message": "too many requests"
+}
+```
 
 - Given: 在請求數已達上限的重設時間後
 
-  則結果同 `case 1`
+```text
+則結果同 `case 1`
+```
 
 ## Folder structure
 
