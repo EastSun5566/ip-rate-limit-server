@@ -1,11 +1,11 @@
 # IP rate limit server
 
-This project is based on my [typescript-koa-starter](https://github.com/EastSun5566/typescript-koa-starter)
+> This project is based on my [typescript-koa-starter](https://github.com/EastSun5566/typescript-koa-starter)
 
 ## Required features
 
-- 每個 IP 每分鐘僅能接受 60 個 requests
-- 在首頁顯示目前的 request 量，超過限制的話則顯示 Error，例如在一分鐘內第 30 個 request 則顯示 30，第 61 個 request 則顯示 Error
+- 每個 IP 每分鐘僅能接受 `60` 個 requests
+- 在首頁顯示目前的 request 量，超過限制的話則顯示 Error，例如在一分鐘內第 `30` 個 request 則顯示 `30`，第 `61` 個 request 則顯示 Error
 
 ## Using stack
 
@@ -81,7 +81,7 @@ docker-compose run server npm test
 
 - Given: 在請求數已達上限的重設時間後
 
-  則結果同 case 1
+  則結果同 `case 1`
 
 ## Folder structure
 
@@ -118,10 +118,10 @@ src
 1. 需要記住每個 IP 當前的請求數，並在請求進來後加一
 1. 需要在給定時間內重置計數
 
-最簡單直覺的方式是使用 local memory 記住狀態，以 Map key 為 IP、 value 為請求數，並用給定時間做 setInterval 去 delete key 重置，當然這有很多缺點：
+最簡單直覺的方式是使用 local memory 記住狀態，以 Map key 為 IP、 value 為請求數，並用給定時間做 `setInterval` 去 delete key 重置，當然這有很多缺點：
 
 1. QPS 很高時 local memory 會被塞爆
-1. setInterval 通常會延遲，也就是說相同 IP 會超訪
+1. `setInterval` 通常會延遲，也就是說相同 IP 會超訪
 1. 水平擴展時狀態全部失效
 
 所以這邊選擇用使用外部的 In-memory DB Redis，為何不用使用其他的 On-disk DBs，除了條件有提到不用實作資料持久化外有幾個原因：
