@@ -24,7 +24,7 @@
   "homepage": "https://github.com/EastSun5566/ip-rate-limit-server",
   "dependencies": {
     "ioredis": "^4.19.2",
-    "koa": "^2.16.1",
+    "koa": "^3.0.1",
     "koa-router": "^7.4.0"
   },
   "devDependencies": {
